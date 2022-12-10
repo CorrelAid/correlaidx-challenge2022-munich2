@@ -3,7 +3,9 @@ MATCH (a:Address)
 WHERE a.country IS NOT null
 RETURN DISTINCT a.sourceID
 
-//to find people with addresses in Munich via zip code; only works for addresses with property .country
+//to find some people with addresses in Munich via zip code; 
+//only works for addresses with property .country and the zip code needs to be at the end; 
+//also often the zip code is not part of the address property but instead of the name property
 MATCH (o:Officer) -[c*1..2]- (a:Address)
 WITH *, toInteger(right(a.address, 5)) AS plz_de
 WHERE a.country = "Germany" AND (plz_de >= 80000 AND plz_de < 82000)
